@@ -3,17 +3,17 @@ import html2canvas from "html2canvas";
 
 const ColorPicker = () => {
   const [selectedColor, setSelectedColor] = useState("#000000");
-  const [capturedCanvas, setCapturedCanvas] = useState(null);
+  const [isPicking, setIsPicking] = useState(false);
   const capturedCanvasRef = useRef(null);
+  const [cursorColor, setCursorColor] = useState("#000000");
+  const cursorSquareRef = useRef(null);
 
   const handlePickColorButtonClick = async () => {
     try {
       const capturedCanvas = await html2canvas(document.documentElement);
       console.log("Canvas captured");
-      setCapturedCanvas(capturedCanvas);
       capturedCanvasRef.current = capturedCanvas;
-
-      document.addEventListener("click", handleClick);
+      setIsPicking(true);
     } catch (error) {
       console.error("Error capturing HTML content:", error);
     }
@@ -32,10 +32,44 @@ const ColorPicker = () => {
       console.log("Pixel Values:", pixel[0], pixel[1], pixel[2]);
       setSelectedColor(color);
 
-      // Remove the click event listener after capturing the click
-      document.removeEventListener("click", handleClick);
+      // Disable color picking after capturing the click
+      setIsPicking(false);
     }
   };
+
+  const handleMouseMove = (event) => {
+    if (isPicking) {
+      const canvas = capturedCanvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        const x = event.clientX;
+        const y = event.clientY;
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+        const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+        setCursorColor(color);
+
+        // Update the position of the cursor square
+        const cursorSquare = cursorSquareRef.current;
+        if (cursorSquare) {
+          cursorSquare.style.left = `${event.clientX - 30}px`;
+          cursorSquare.style.top = `${event.clientY - 30}px`;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isPicking) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("click", handleClick);
+    };
+  }, [isPicking]);
 
   return (
     <>
@@ -81,6 +115,20 @@ const ColorPicker = () => {
       >
         <h6>Pick a Color</h6>
       </button>
+
+      {/* Cursor square for displaying the hovered color */}
+      {isPicking && (
+        <div
+          ref={cursorSquareRef}
+          style={{
+            position: "fixed",
+            width: "20px",
+            height: "20px",
+            backgroundColor: cursorColor,
+            border: "1px solid #000",
+          }}
+        ></div>
+      )}
     </>
   );
 };
