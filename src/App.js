@@ -4,7 +4,7 @@ import ColorPicker from "./components/ColorPicker";
 
 function App() {
   return (
-    <div className="App">
+    <div className="popup-container">
       <ColorPicker />
     </div>
   );

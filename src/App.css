@@ -1,9 +1,49 @@
-/* App.css or style.css */
+/* ColorPicker.css */
 .popup-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   margin: 0;
+ 
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: top;
+  width:95%;
+  margin: 5px;
+  border-bottom: 1px solid #FF9F68;
+}
+
+ .logo {
+  height: 30px;
+ }
+ 
+body{
+  height: 400px;
+  width: 300px;
+  border: 1px solid black;
+  margin:0;
+}
+
+.color-picker-button {
+  background-color: #FF9F68;
+}
+.color-picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* Adjust as needed */
+}
+
+canvas {
+ position: fixed;
+ top: 0;
+ left: 0;
+ margin: 0;
 }
