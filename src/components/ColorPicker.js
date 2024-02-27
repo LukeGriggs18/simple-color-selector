@@ -145,21 +145,23 @@ const ColorPicker = () => {
       <div className="header-container">
         <img className="logo" src="/logo.png" alt="Logo" />
       </div>
-      <div className="selected-container">
-        <div className="Selected-colour">
+      <div className="body-container">
+        <div className="selected-color">
           <h6>SELECTED COLOR</h6>
           <div
+            className="selected-color-box"
             style={{
               backgroundColor: `rgb(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b})`,
-              width: "30px",
-              height: "30px",
-              border: "1px solid #000",
             }}
           ></div>
         </div>
+
         <div className="selected-hex">
           <h6>HEX</h6>
-          {selectedColorHex}
+          <div className="selected-hex-boxes">
+            <span className="display">{selectedColorHex}</span>
+            <span className="display">{selectedColorHex}</span>
+          </div>
         </div>
         <div className="selected-hsl">
           <h6>HSL</h6>

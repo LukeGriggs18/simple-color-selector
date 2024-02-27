@@ -1,26 +1,68 @@
 /* ColorPicker.css */
-.popup-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-}
+
 
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: top;
-  width:95%;
-  margin: 5px;
+  justify-content: flex-start;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2.5%;
   border-bottom: 1px solid #FF9F68;
 }
+.body-container {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+}
 
+.selected-color {
+  width: 100%;
+  display: flex;
+  flex-direction:  row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.selected-color-box{
+  margin-left: 5%;
+  width: 40px;
+  height: 15px;
+  border: 1px solid #000;
+}
+
+.selected-hex{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.selected-hex div{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+h6 {
+  margin:0%;
+}
  .logo {
-  height: 30px;
+  width: 100%;
  }
  
 body{
+  display: flex;
+  align-items: top;
+  justify-content: center;
   height: 400px;
   width: 300px;
   border: 1px solid black;
