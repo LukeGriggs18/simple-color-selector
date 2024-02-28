@@ -4,7 +4,9 @@
   "version": "0.1",
   "description": "A simple color picker extension",
   "permissions": [
-      "activeTab"
+      "activeTab",
+      "storage",
+      "https://*/*"
   ],
   "action": {
       "default_popup": "index.html"

@@ -20,7 +20,9 @@ const ColorPicker = () => {
 
   const handlePickColorButtonClick = async () => {
     try {
-      const capturedCanvas = await html2canvas(document.documentElement);
+      const capturedCanvas = await html2canvas(document.documentElement, {
+        useCORS: true,
+      });
       console.log("Canvas captured");
       capturedCanvasRef.current = capturedCanvas;
       setIsPicking(true);
@@ -128,6 +130,10 @@ const ColorPicker = () => {
       l: lightness.toFixed(2),
     };
   }
+  const handleCopyToClipboard = (content) => {
+    navigator.clipboard.writeText(content);
+  };
+
   useEffect(() => {
     if (isPicking) {
       document.addEventListener("mousemove", handleMouseMove);
@@ -159,36 +165,85 @@ const ColorPicker = () => {
         <div className="selected-hex">
           <h6>HEX</h6>
           <div className="selected-hex-boxes">
-            <span className="display">{selectedColorHex}</span>
-            <span className="display">{selectedColorHex}</span>
+            <button
+              className="display left"
+              onClick={() =>
+                handleCopyToClipboard(selectedColorHex.toUpperCase().toString())
+              }
+            >
+              {selectedColorHex}
+            </button>
+            <button
+              className="display"
+              onClick={() => handleCopyToClipboard(selectedColorHex)}
+            >
+              {selectedColorHex}
+            </button>
           </div>
         </div>
         <div className="selected-hsl">
           <h6>HSL</h6>
-          hsl({selectedColorHsl.h}, {selectedColorHsl.s}%, {selectedColorHsl.l}
-          %)
+          <button
+            className="display"
+            onClick={() => handleCopyToClipboard(selectedColorHex)}
+          >
+            hsl({selectedColorHsl.h}, {selectedColorHsl.s}%,{" "}
+            {selectedColorHsl.l}
+            %)
+          </button>
         </div>
         <div className="selected-rgb">
           <h6>RGB</h6>
-          <p>
+          <button className="display" onClick={() => handleCopyToClipboard}>
             rgb({selectedColor.r},{selectedColor.g},{selectedColor.b})
-          </p>
+          </button>
         </div>
+
+        <div className="recent-container">
+          <div className="recent-header">
+            <h6>RECENT COLORS</h6>
+            <button className="clear">
+              <h6>CLEAR</h6>
+            </button>
+          </div>
+          <div className="color-discs">
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+          </div>
+        </div>
+        <div className="palette-container">
+          <div className="palette-header">
+            <h6>WEBPAGE PALETTE</h6>
+          </div>
+          <div className="color-discs">
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+            <button className="recent-color"></button>
+          </div>
+          {/* You can add webpage palette here based on your requirements */}
+        </div>
+        <button
+          className="color-picker-button"
+          onClick={handlePickColorButtonClick}
+        >
+          <span className="pick-color-text">PICK COLOR</span>
+        </button>
       </div>
-      <div className="recent-container">
-        <h6>RECENT COLORS</h6>
-        {/* You can add recent colors here based on your requirements */}
-      </div>
-      <div className="pallete-container">
-        <h6>WEBPAGE PALETTE</h6>
-        {/* You can add webpage palette here based on your requirements */}
-      </div>
-      <button
-        className="color-picker-button"
-        onClick={handlePickColorButtonClick}
-      >
-        <h6>Pick a Color</h6>
-      </button>
 
       {/* Cursor square for displaying the hovered color */}
       {isPicking && (
